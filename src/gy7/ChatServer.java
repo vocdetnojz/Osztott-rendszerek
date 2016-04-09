@@ -10,7 +10,7 @@ public class ChatServer {
     private boolean serverAlive = true;
 
     private Map<String, PrintWriter> clients = new HashMap<String, PrintWriter>();
-    
+
     public int getPort() {
         return PORT;
     }

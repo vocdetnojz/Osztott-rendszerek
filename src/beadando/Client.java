@@ -24,14 +24,14 @@ public class Client {
 
     public static void main(String[] args) throws IOException, InterruptedException{
 
-        s = new Socket("localhost", 32123);
-        pw = new PrintWriter(s.getOutputStream(), true);
-        sc = new Scanner(s.getInputStream());
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Username: ");
         String username = br.readLine();
 //        System.out.println("Sent username: " + username);
+        s = new Socket("localhost", 32123);
+        pw = new PrintWriter(s.getOutputStream(), true);
+        sc = new Scanner(s.getInputStream());
         pw.println(username);
         pw.flush();
 
