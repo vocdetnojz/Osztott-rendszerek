@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -128,15 +128,24 @@ public class GameServer{
 
     private String makeFilename(String name1, String name2){
         String filename = name1 + "_" + name2 + "_";
-        LocalTime now = LocalTime.now();
+        LocalDateTime now = LocalDateTime.now();
+
+        int year = now.getYear();
+        filename += year + "-";
+
+        int month = now.getMonthValue();
+        filename += month + "-";
+
+        int day = now.getDayOfMonth();
+        filename += day + " ";
 
         int hours = now.getHour();
         if(hours < 10) filename += "0" + hours;
-        else filename += hours;
+        else filename += hours + "_";
 
         int minutes = now.getMinute();
         if(minutes < 10) filename += "0" + minutes;
-        else filename += minutes;
+        else filename += minutes + "_";
 
         int seconds = now.getSecond();
         if(seconds < 10) filename += "0" + seconds;

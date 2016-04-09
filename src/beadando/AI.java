@@ -24,11 +24,13 @@ public class AI {
     static Scanner sc;
     static boolean active = true;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-/*
+    public static void main(String[] args) throws IOException, InterruptedException{
+
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Username: ");
-        String username = br.readLine();
+
+        String username = args[0];
+
         s = new Socket("localhost", 32123);
         pw = new PrintWriter(s.getOutputStream(), true);
         sc = new Scanner(s.getInputStream());
@@ -53,7 +55,7 @@ public class AI {
                         pw.println(word);
                         pw.flush();
                         break;
-                    case "exit":
+                    case "nyert":
                         // az ellenféle kilépett, ez a klien győz
                         System.out.println("Győztél!");
                         active = false;
@@ -81,7 +83,7 @@ public class AI {
             // ha nem létezik már kapocsolat, az ellenfél lecsatlakozott, ezért ez a kliens nyert
             System.out.println("Győztél!");
         }
-*/
+
     }
 
 
