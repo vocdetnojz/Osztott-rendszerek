@@ -27,7 +27,7 @@ public class Client {
     
     public static void main(String[] args) throws IOException, InterruptedException{
         
-        s = new Socket("157.181.163.11", 12345);
+        s = new Socket("localhost", 12345);
         pw = new PrintWriter(s.getOutputStream(), true);
         sc = new Scanner(s.getInputStream());
         

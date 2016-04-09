@@ -5,28 +5,37 @@
  */
 package beadando;
 
-import static gy6.Server6.PORT;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  *
  * @author fevtabb
  */
-public class GameServer {
+public class GameServer{
     private static final int PORT = 32123;
-        ServerSocket ss;
+    private ServerSocket serverSocket;
+    private boolean serverAlive = true;
+    private static int TIMEOUT_LENGTH = 100000;
 
     public int getPort(){
         return PORT;
     }
         
     public GameServer() throws IOException {
-        this.ss = new ServerSocket(PORT);
+        System.out.println("A szerver elindult...");
+        this.serverSocket = new ServerSocket(PORT);
+        try {
+            serverSocket.setSoTimeout(TIMEOUT_LENGTH);
+        } catch (SocketException e) {
+//            System.out.println("Socket Exception: letelt a " + TIMEOUT_LENGTH/1000 + "mp, a szerver leáll a már megkezdett játékok vége után.");
+//            serverAlive = false;
+        }
     // put this into a thread
         // get two players
         
@@ -38,7 +47,22 @@ public class GameServer {
         // log the words - <playerX> <word>
         // if someone sends "exit" or one of them disconnects notify the other about winning and terminate the game
     }
-    
+
+    public void handleClients(){
+        while (serverAlive) {
+            try {
+                ClientHandler player1 = new ClientHandler(serverSocket.accept());
+                ClientHandler player2 = new ClientHandler(serverSocket.accept());
+                player2.start();
+                player2.start();
+                System.out.println("Két játékos csatlakozott!");
+            } catch (IOException e) {
+                System.err.println("Letelt a " + TIMEOUT_LENGTH/1000 + "mp, a szerver leáll a már megkezdett játékok vége után.");
+                serverAlive = false;
+            }
+        }
+    }
+
     class ClientHandler extends Thread {
 
         PrintWriter pw;
@@ -56,28 +80,13 @@ public class GameServer {
 
         @Override
         public void run() {
-            String message = null;
-            try {
-                boolean ok = false;
-                while (! ok) {
-                    name = br.readLine();
-                    if (name == null) return;
-                    ok = addClient(name, pw);
-                    if (ok) pw.println("ok"); else pw.println("nok");
-                }
-                while (! "exit".equals(message)) {
-                    message = br.readLine();
-                    if (message == null) break;
-                    send(name, message);
-                }
-            } catch (IOException e) {
-                System.err.println("Kommunikacios problema egy kliensnel. Nev: " + name);
-            } finally {
-                if (name != null) send(name, "kilepett.");
-                removeClient(name);
-                try {pw.close(); br.close();} catch (IOException e) {}
-            }
+
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        GameServer server = new GameServer();
+        if (server != null) server.handleClients();
     }
 
 }
