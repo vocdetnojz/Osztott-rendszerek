@@ -46,6 +46,7 @@ public class Client {
                     pw.flush();
                     break;
                 case "exit":
+                    System.out.println("Vesztettél, mert feladtad!");
                     active = false;
                     break;
                 case "Ön nyert!":

@@ -23,7 +23,7 @@ public class GameServer{
     private static final int PORT = 32123;
     private ServerSocket serverSocket;
     private boolean serverAlive = true;
-    private static int TIMEOUT_LENGTH = 300000;
+    private static int TIMEOUT_LENGTH = 30000;
 
     private Map<String, PrintWriter> clients = new HashMap<String, PrintWriter>();
         
@@ -36,16 +36,6 @@ public class GameServer{
 //            System.out.println("Socket Exception: letelt a " + TIMEOUT_LENGTH/1000 + "mp, a szerver leáll a már megkezdett játékok vége után.");
 //            serverAlive = false;
         }
-    // put this into a thread
-        // get two players
-        
-        // create a log file - <player1>_<player2>_<timestamp>.txt
-
-        // notify the first player to start with keyword "start"
-
-        // get the message from one user and send it to the other
-        // log the words - <playerX> <word>
-        // if someone sends "exit" or one of them disconnects notify the other about winning and terminate the game
     }
 
     public void handleClients(){
@@ -53,12 +43,6 @@ public class GameServer{
             try {
                 GameHandler gh = new GameHandler(serverSocket.accept(), serverSocket.accept());
                 gh.start();
-//                ClientHandler player1 = new ClientHandler(serverSocket.accept());
-//                ClientHandler player2 = new ClientHandler(serverSocket.accept());
-//                player1.start();
-//                player2.start();
-//                System.out.println("Két játékos csatlakozott!");
-
             } catch (IOException e) {
                 System.err.println("Letelt a " + TIMEOUT_LENGTH/1000 + "mp, a szerver leáll a már megkezdett játékok vége után.");
                 serverAlive = false;
@@ -70,6 +54,8 @@ public class GameServer{
 
         Socket socket1;
         Socket socket2;
+        String name1;
+        String name2;
         PrintWriter pw1;
         PrintWriter pw2;
         BufferedReader br1;
@@ -91,39 +77,30 @@ public class GameServer{
         @Override
         public void run(){
             System.out.println("Két játékos csatlakozott!");
+            // TODO: logging
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("End");
-//            while (true){
-//
-//            }
+            try {
+                name1 = br1.readLine();
+                name2 = br2.readLine();
+                pw1.println("start");
+                pw1.flush();
+                while (true){
+                    pw2.println(br1.readLine());
+                    pw2.flush();
+                    pw1.println(br2.readLine());
+                    pw1.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
-/*
-    class ClientHandler extends Thread {
-
-        PrintWriter pw;
-        BufferedReader br;
-        String name;
-
-        ClientHandler(Socket s) {
-            try {
-                pw = new PrintWriter(s.getOutputStream(), true);
-                br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            } catch (IOException e) {
-                System.err.println("Inicializalasi problema egy kliensnel. Nev: " + name);
-            }
-        }
-
-        @Override
-        public void run() {
-
-        }
-    }*/
 
     public static void main(String[] args) throws IOException {
         GameServer server = new GameServer();

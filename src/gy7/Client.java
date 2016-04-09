@@ -33,7 +33,7 @@ public class Client {
         
         String username = "nemenvotam";
         System.out.println("Sent username: " + username);
-        pw.println("qwert1111");
+        pw.println("222");
         pw.flush();
         
         Thread.sleep(1000);
