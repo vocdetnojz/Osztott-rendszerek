@@ -97,6 +97,7 @@ public class GameServer{
                 while (true){
 
                     temp = br1.readLine();
+                    if(temp.equals("exit")) temp = "nyert";
                     pw2.println(temp);
                     pw2.flush();
                     if(temp.equals("exit")) break;
@@ -104,6 +105,7 @@ public class GameServer{
                     turn = name2;
 
                     temp = br2.readLine();
+                    if(temp.equals("exit")) temp = "nyert";
                     pw1.println(temp);
                     pw1.flush();
                     if(temp.equals("exit")) break;
@@ -113,9 +115,9 @@ public class GameServer{
                 System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
             } catch (IOException e) {
                 System.out.println("JÁTSZMA VÉGE " + name1 + " és " + name2 + " között: DISCONNECT");
-                pw1.println("exit");
+                pw1.println("nyert");
                 pw1.flush();
-                pw2.println("exit");
+                pw2.println("nyert");
                 pw2.flush();
             }
             writer.close();

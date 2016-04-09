@@ -53,7 +53,7 @@ public class Client {
                         pw.println(word);
                         pw.flush();
                         break;
-                    case "exit":
+                    case "nyert":
                         // az ellenféle kilépett, ez a klien győz
                         System.out.println("Győztél!");
                         active = false;
