@@ -121,7 +121,6 @@ public class GameServer{
                 pw2.flush();
             }
             writer.close();
-            //System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
         }
 
     }
