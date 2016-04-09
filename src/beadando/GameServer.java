@@ -100,7 +100,7 @@ public class GameServer{
                     if(temp.equals("exit")) temp = "nyert";
                     pw2.println(temp);
                     pw2.flush();
-                    if(temp.equals("exit")) break;
+                    if(temp.equals("nyert")) break;
                     else writer.println(name1 + " " + temp);
                     turn = name2;
 
@@ -108,7 +108,7 @@ public class GameServer{
                     if(temp.equals("exit")) temp = "nyert";
                     pw1.println(temp);
                     pw1.flush();
-                    if(temp.equals("exit")) break;
+                    if(temp.equals("nyert")) break;
                     else writer.println(name2 + " " + temp);
                     turn = name1;
                 }
