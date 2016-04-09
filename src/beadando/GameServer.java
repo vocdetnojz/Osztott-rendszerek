@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +62,7 @@ public class GameServer{
         BufferedReader br1;
         BufferedReader br2;
         String turn = name1;
+        PrintWriter writer = null;
 
         GameHandler(Socket s1, Socket s2) {
             try {
@@ -78,17 +80,18 @@ public class GameServer{
         @Override
         public void run(){
             System.out.println("JÁTSZMA KEZDETE: Két játékos csatlakozott!");
-            // TODO: logging
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             try {
                 String temp;
                 name1 = br1.readLine();
                 name2 = br2.readLine();
+                String filename = makeFilename(name1, name2);
+                writer = new PrintWriter(filename, "UTF-8");
+                System.out.println(filename);
                 pw1.println("start");
                 pw1.flush();
                 while (true){
@@ -97,12 +100,14 @@ public class GameServer{
                     pw2.println(temp);
                     pw2.flush();
                     if(temp.equals("exit")) break;
+                    else writer.println(name1 + " " + temp);
                     turn = name2;
 
                     temp = br2.readLine();
                     pw1.println(temp);
                     pw1.flush();
                     if(temp.equals("exit")) break;
+                    else writer.println(name2 + " " + temp);
                     turn = name1;
                 }
                 System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
@@ -113,9 +118,30 @@ public class GameServer{
                 pw2.println("exit");
                 pw2.flush();
             }
+            writer.close();
             //System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
         }
 
+    }
+
+    private String makeFilename(String name1, String name2){
+        String filename = name1 + "_" + name2 + "_";
+        LocalTime now = LocalTime.now();
+
+        int hours = now.getHour();
+        if(hours < 10) filename += "0" + hours;
+        else filename += hours;
+
+        int minutes = now.getMinute();
+        if(minutes < 10) filename += "0" + minutes;
+        else filename += minutes;
+
+        int seconds = now.getSecond();
+        if(seconds < 10) filename += "0" + seconds;
+        else filename += seconds;
+
+        filename += ".txt";
+        return filename;
     }
 
     public static void main(String[] args) throws IOException {
