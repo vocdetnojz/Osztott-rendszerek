@@ -54,12 +54,13 @@ public class GameServer{
 
         Socket socket1;
         Socket socket2;
-        String name1;
-        String name2;
+        String name1 = "";
+        String name2 = "";
         PrintWriter pw1;
         PrintWriter pw2;
         BufferedReader br1;
         BufferedReader br2;
+        String turn = name1;
 
         GameHandler(Socket s1, Socket s2) {
             try {
@@ -76,28 +77,43 @@ public class GameServer{
 
         @Override
         public void run(){
-            System.out.println("Két játékos csatlakozott!");
+            System.out.println("JÁTSZMA KEZDETE: Két játékos csatlakozott!");
             // TODO: logging
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             try {
+                String temp;
                 name1 = br1.readLine();
                 name2 = br2.readLine();
                 pw1.println("start");
                 pw1.flush();
                 while (true){
-                    pw2.println(br1.readLine());
-                    pw2.flush();
-                    pw1.println(br2.readLine());
-                    pw1.flush();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
+                    temp = br1.readLine();
+                    pw2.println(temp);
+                    pw2.flush();
+                    if(temp.equals("exit")) break;
+                    turn = name2;
+
+                    temp = br2.readLine();
+                    pw1.println(temp);
+                    pw1.flush();
+                    if(temp.equals("exit")) break;
+                    turn = name1;
+                }
+                System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
+            } catch (IOException e) {
+                System.out.println("JÁTSZMA VÉGE " + name1 + " és " + name2 + " között: DISCONNECT");
+                pw1.println("exit");
+                pw1.flush();
+                pw2.println("exit");
+                pw2.flush();
+            }
+            //System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
         }
 
     }
