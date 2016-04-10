@@ -23,8 +23,12 @@ public class Client {
     static Scanner sc;
     static boolean active = true;
 
-    public static void main(String[] args) throws IOException, InterruptedException{
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Client client = new Client();
+        client.startClient();
+    }
 
+    public void startClient() throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Username: ");
@@ -81,7 +85,6 @@ public class Client {
             // ha nem létezik már kapocsolat, az ellenfél lecsatlakozott, ezért ez a kliens nyert
             System.out.println("Győztél!");
         }
-
     }
 }
 //

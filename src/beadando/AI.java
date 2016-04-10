@@ -34,12 +34,17 @@ public class AI {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException{
+        AI ai = new AI(args[0], args[1]);
+        ai.startAI();
+    }
 
+    public AI(String username, String filename){
+        this.username = username;
+        this.filename = filename;
+    }
 
+    public void startAI() throws IOException, InterruptedException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        String username = args[0];
-        String filename = args[1];
 
         LinkedList<String> words = makeWords(filename);
 
@@ -101,7 +106,6 @@ public class AI {
             // ha nem létezik már kapocsolat, az ellenfél lecsatlakozott, ezért ez a kliens nyert
             System.out.println("Győztél!");
         }
-
     }
 
 

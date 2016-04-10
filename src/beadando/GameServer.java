@@ -91,7 +91,6 @@ public class GameServer{
                 name2 = br2.readLine();
                 String filename = makeFilename(name1, name2);
                 writer = new PrintWriter(filename, "UTF-8");
-                System.out.println(filename);
                 pw1.println("start");
                 pw1.flush();
                 while (true){
@@ -157,6 +156,11 @@ public class GameServer{
     public static void main(String[] args) throws IOException {
         GameServer server = new GameServer();
         if (server != null) server.handleClients();
+    }
+
+    public void startServer() throws IOException{
+        //GameServer server = new GameServer();
+        if (this != null) this.handleClients();
     }
 
 }
