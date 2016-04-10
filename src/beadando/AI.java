@@ -60,26 +60,26 @@ public class AI {
                 switch (serverResponse) {
                     case "start":
                         // elsőként adhat meg szót
-                        System.out.print("Kérek egy szót: ");
+                        // System.out.print("Kérek egy szót: ");
                         word = words.pop();
-                        System.out.println(word);
+                        System.out.println(username + ": " + word);
                         if (word.equals("exit")) {
                             System.out.println("Feladtad, vesztettél!");
                             active = false;
                         }
+                        Thread.sleep(500);
                         pw.println(word);
                         pw.flush();
                         break;
                     case "nyert":
                         // az ellenfél kilépett, ez a gép győz
-                        System.out.println("Győztél!");
+                        System.out.println(username + " nyert");
                         active = false;
                         break;
                     default:
                         // kapott szóra megfelelő választ
-                        System.out.println("ellenfél szava: " + serverResponse);
+                        // System.out.println("ellenfél szava: " + serverResponse);
                         temp = serverResponse.substring(serverResponse.length()-1, serverResponse.length());
-                        System.out.print("Kérek egy szót: ");
                         for (String w : words) {
                             if (w.substring(0, 1).equals(temp)) {
                                 word = w;
@@ -87,11 +87,12 @@ public class AI {
                                 break;
                             }
                         }
-                        System.out.println(word);
+                        System.out.println(username + ": " + word);
+                        Thread.sleep(500);
                         pw.println(word);
                         pw.flush();
                         if(word.equals("exit")){
-                            System.out.println("Feladtad, vesztettél!");
+                            //System.out.println("Feladtad, vesztettél!");
                             System.exit(0);
                         }
                 }
