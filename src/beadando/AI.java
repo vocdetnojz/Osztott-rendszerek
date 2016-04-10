@@ -5,13 +5,9 @@
  */
 package beadando;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -23,6 +19,20 @@ public class AI {
     static PrintWriter pw;
     static Scanner sc;
     static boolean active = true;
+    String username;
+    String filename;
+
+    private static LinkedList<String> makeWords(String filename) throws IOException {
+        LinkedList<String> w = new LinkedList<>();
+        FileReader fr = new FileReader(new File(filename));
+        BufferedReader br = new BufferedReader(fr);
+        String line;
+        while((line = br.readLine()) != null) {
+//            System.out.println(line);
+            w.add(line);
+        }
+        return w;
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException{
 
@@ -30,6 +40,9 @@ public class AI {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String username = args[0];
+        String filename = args[1];
+
+        LinkedList<String> words = makeWords(filename);
 
         s = new Socket("localhost", 32123);
         pw = new PrintWriter(s.getOutputStream(), true);
@@ -38,16 +51,19 @@ public class AI {
         pw.flush();
 
         String serverResponse;
-        String word;
+        String word = "";
         String temp;
+
         try {
             while (active) {
+                word = "exit";
                 serverResponse = sc.nextLine();
                 switch (serverResponse) {
                     case "start":
                         // elsőként adhat meg szót
                         System.out.print("Kérek egy szót: ");
-                        word = br.readLine();
+                        word = words.pop();
+                        System.out.println(word);
                         if (word.equals("exit")) {
                             System.out.println("Feladtad, vesztettél!");
                             active = false;
@@ -65,18 +81,20 @@ public class AI {
                         System.out.println("ellenfél szava: " + serverResponse);
                         temp = serverResponse.substring(serverResponse.length()-1, serverResponse.length());
                         System.out.print("Kérek egy szót: ");
-                        word = br.readLine();
-                        // kérd újra, amíg nem lesz megfelelő szó
-                        while(!word.substring(0,1).equals(temp) && !word.equals("exit")){
-                            System.out.print("Nem megfelelő szó, kérek egy másikat: ");
-                            word = br.readLine();
+                        for (String w : words) {
+                            if (w.substring(0, 1).equals(temp)) {
+                                word = w;
+                                words.remove(w);
+                                break;
+                            }
                         }
-                        if (word.equals("exit")) {
-                            System.out.println("Feladtad, vesztettél!");
-                            active = false;
-                        }
+                        System.out.println(word);
                         pw.println(word);
                         pw.flush();
+                        if(word.equals("exit")){
+                            System.out.println("Feladtad, vesztettél!");
+                            System.exit(0);
+                        }
                 }
             }
         } catch (NoSuchElementException e) {

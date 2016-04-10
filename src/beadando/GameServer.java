@@ -139,11 +139,11 @@ public class GameServer{
         filename += day + " ";
 
         int hours = now.getHour();
-        if(hours < 10) filename += "0" + hours;
+        if(hours < 10) filename += "0" + hours + "_";
         else filename += hours + "_";
 
         int minutes = now.getMinute();
-        if(minutes < 10) filename += "0" + minutes;
+        if(minutes < 10) filename += "0" + minutes + "_";
         else filename += minutes + "_";
 
         int seconds = now.getSecond();
