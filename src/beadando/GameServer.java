@@ -5,13 +5,11 @@
  */
 package beadando;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.Buffer;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,9 +88,12 @@ public class GameServer{
                 name1 = br1.readLine();
                 name2 = br2.readLine();
                 String filename = makeFilename(name1, name2);
-                writer = new PrintWriter(filename, "UTF-8");
+
                 pw1.println("start");
                 pw1.flush();
+                FileWriter fw = new FileWriter(filename, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                writer = new PrintWriter(bw, true);
 
                 turn = name1;
                 while (true){
@@ -105,7 +106,6 @@ public class GameServer{
                         if(temp.equals("nyert")) break;
                         else {
                             writer.println(name1 + " " + temp);
-                            //System.out.println("beírtam " + name1);
                         }
                         turn = name2;
                     } else if(turn.equals(name2)) {
@@ -116,23 +116,20 @@ public class GameServer{
                         if(temp.equals("nyert")) break;
                         else {
                             writer.println(name2 + " " + temp);
-                            //System.out.println("beírtam " + name1);
                         }
                         turn = name1;
                     }
 
                 }
-                //System.out.println("ZÁRTAM " + name1);
                 System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
             } catch (IOException e) {
-                //System.out.println("ZÁRTAM " + name1);
                 System.out.println("JÁTSZMA VÉGE " + name1 + " és " + name2 + " között: DISCONNECT");
                 pw1.println("nyert");
                 pw1.flush();
                 pw2.println("nyert");
                 pw2.flush();
             }
-            writer.close();
+            //writer.close();
         }
 
     }
