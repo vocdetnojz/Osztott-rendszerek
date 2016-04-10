@@ -21,10 +21,10 @@ import java.util.Map;
  * @author fevtabb
  */
 public class GameServer{
-    private static final int PORT = 32123;
+    private final int PORT = 32123;
     private ServerSocket serverSocket;
     private boolean serverAlive = true;
-    private static int TIMEOUT_LENGTH = 30000;
+    private int TIMEOUT_LENGTH = 30000;
 
     private Map<String, PrintWriter> clients = new HashMap<String, PrintWriter>();
         
@@ -97,29 +97,16 @@ public class GameServer{
                 turn = name1;
                 while (true){
 
-//                    temp = br1.readLine();
-//                    if(temp.equals("exit")) temp = "nyert";
-//                    pw2.println(temp);
-//                    pw2.flush();
-//                    if(temp.equals("nyert")) break;
-//                    else writer.println(name1 + " " + temp);
-//                    turn = name2;
-//
-//                    temp = br2.readLine();
-//                    if(temp.equals("exit")) temp = "nyert";
-//                    pw1.println(temp);
-//                    pw1.flush();
-//                    if(temp.equals("nyert")) break;
-//                    else writer.println(name2 + " " + temp);
-//                    turn = name1;
-//
                     if (turn.equals(name1)){
                         temp = br1.readLine();
                         if(temp.equals("exit")) temp = "nyert";
                         pw2.println(temp);
                         pw2.flush();
                         if(temp.equals("nyert")) break;
-                        else writer.println(name1 + " " + temp);
+                        else {
+                            writer.println(name1 + " " + temp);
+                            //System.out.println("beírtam " + name1);
+                        }
                         turn = name2;
                     } else if(turn.equals(name2)) {
                         temp = br2.readLine();
@@ -127,13 +114,18 @@ public class GameServer{
                         pw1.println(temp);
                         pw1.flush();
                         if(temp.equals("nyert")) break;
-                        else writer.println(name2 + " " + temp);
+                        else {
+                            writer.println(name2 + " " + temp);
+                            //System.out.println("beírtam " + name1);
+                        }
                         turn = name1;
                     }
 
                 }
+                //System.out.println("ZÁRTAM " + name1);
                 System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
             } catch (IOException e) {
+                //System.out.println("ZÁRTAM " + name1);
                 System.out.println("JÁTSZMA VÉGE " + name1 + " és " + name2 + " között: DISCONNECT");
                 pw1.println("nyert");
                 pw1.flush();
