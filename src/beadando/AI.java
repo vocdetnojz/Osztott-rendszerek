@@ -22,7 +22,7 @@ public class AI {
     String username;
     String filename;
 
-    private static LinkedList<String> makeWords(String filename) throws IOException {
+    private LinkedList<String> makeWords(String filename) throws IOException {
         LinkedList<String> w = new LinkedList<>();
         FileReader fr = new FileReader(new File(filename));
         BufferedReader br = new BufferedReader(fr);
