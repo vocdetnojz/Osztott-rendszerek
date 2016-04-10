@@ -49,7 +49,7 @@ public class SzolancJatek {
         }
     }
 
-    static class AIThread extends Thread {
+    private static class AIThread extends Thread {
         AI ai = null;
 
         AIThread(String name, String words){
@@ -68,7 +68,7 @@ public class SzolancJatek {
         }
     }
 
-    static class ClientThread extends Thread {
+    private static class ClientThread extends Thread {
         Client cl = null;
 
         ClientThread(){
