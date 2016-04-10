@@ -54,7 +54,7 @@ public class Client {
                         pw.flush();
                         break;
                     case "nyert":
-                        // az ellenféle kilépett, ez a klien győz
+                        // az ellenfél kilépett, ez a klien győz
                         System.out.println("Győztél!");
                         active = false;
                         break;

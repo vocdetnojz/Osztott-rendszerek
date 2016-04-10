@@ -28,7 +28,6 @@ public class AI {
         BufferedReader br = new BufferedReader(fr);
         String line;
         while((line = br.readLine()) != null) {
-//            System.out.println(line);
             w.add(line);
         }
         return w;
@@ -51,7 +50,7 @@ public class AI {
         pw.flush();
 
         String serverResponse;
-        String word = "";
+        String word;
         String temp;
 
         try {
@@ -72,7 +71,7 @@ public class AI {
                         pw.flush();
                         break;
                     case "nyert":
-                        // az ellenféle kilépett, ez a klien győz
+                        // az ellenfél kilépett, ez a gép győz
                         System.out.println("Győztél!");
                         active = false;
                         break;
