@@ -18,10 +18,10 @@ import java.util.Scanner;
  * @author fevtabb
  */
 public class Client {
-    static Socket s;
-    static PrintWriter pw;
-    static Scanner sc;
-    static boolean active = true;
+    Socket s;
+    PrintWriter pw;
+    Scanner sc;
+    boolean active = true;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Client client = new Client();

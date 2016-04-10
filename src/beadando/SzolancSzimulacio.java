@@ -18,25 +18,25 @@ public class SzolancSzimulacio {
         ServerThread st = new ServerThread();
         st.start();
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
-        AI ai1 = new AI("Jatekos1", "szokincs1.txt");
-        ai1.startAI();
+        AIThread ai1 = new AIThread("Jatekos1", "szokincs1.txt");
+        ai1.start();
 
-        Thread.sleep(200);
+        Thread.sleep(500);
 
-        AI ai2 = new AI("Jatekos2", "szokincs1.txt");
-        ai2.startAI();
+        AIThread ai2 = new AIThread("Jatekos2", "szokincs1.txt");
+        ai2.start();
 
-        Thread.sleep(200);
+        Thread.sleep(500);
 
-        AI ai3 = new AI("Jatekos3", "szokincs1.txt");
-        ai3.startAI();
+        AIThread ai3 = new AIThread("Jatekos3", "szokincs1.txt");
+        ai3.start();
 
-        Thread.sleep(200);
+        Thread.sleep(500);
 
-        AI ai4 = new AI("Jatekos4", "szokincs2.txt");
-        ai4.startAI();
+        AIThread ai4 = new AIThread("Jatekos4", "szokincs2.txt");
+        ai4.start();
 
     }
 
@@ -44,7 +44,7 @@ public class SzolancSzimulacio {
 
         GameServer gs = null;
 
-        ServerThread () {
+        ServerThread() {
             try {
                 gs = new GameServer();
             } catch (IOException e) {
@@ -53,7 +53,7 @@ public class SzolancSzimulacio {
         }
 
         @Override
-        public void run(){
+        public void run() {
             try {
                 gs.startServer();
             } catch (IOException e) {

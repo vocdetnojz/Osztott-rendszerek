@@ -15,10 +15,10 @@ import java.util.*;
  */
 public class AI {
 
-    static Socket s;
-    static PrintWriter pw;
-    static Scanner sc;
-    static boolean active = true;
+    Socket s;
+    PrintWriter pw;
+    Scanner sc;
+    boolean active = true;
     String username;
     String filename;
 
