@@ -22,8 +22,8 @@ public class SzolancJatek {
         AIThread ait = new AIThread("Robot", "szokincs1.txt");
         ait.start();
 
-        Client cl = new Client();
-        cl.startClient();
+        ClientThread clt = new ClientThread();
+        clt.start();
 
     }
 
