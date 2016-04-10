@@ -37,8 +37,7 @@ public class SzolancSzimulacio {
 
         AIThread ai4 = new AIThread("Jatekos4", "szokincs2.txt");
         ai4.start();
-
-        Thread.sleep(500);
+//
 
     }
 

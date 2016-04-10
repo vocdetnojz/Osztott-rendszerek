@@ -77,7 +77,7 @@ public class GameServer{
 
         @Override
         public void run(){
-            System.out.println("JÁTSZMA KEZDETE: Két játékos csatlakozott!");
+            //System.out.println("JÁTSZMA KEZDETE: Két játékos csatlakozott!");
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -121,9 +121,9 @@ public class GameServer{
                     }
 
                 }
-                System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
+                //System.out.println("JÁTSZMA VÉGE: " + name1 + " és " + name2 + " között: FELADÁS");
             } catch (IOException e) {
-                System.out.println("JÁTSZMA VÉGE " + name1 + " és " + name2 + " között: DISCONNECT");
+                //System.out.println("JÁTSZMA VÉGE " + name1 + " és " + name2 + " között: DISCONNECT");
                 pw1.println("nyert");
                 pw1.flush();
                 pw2.println("nyert");
