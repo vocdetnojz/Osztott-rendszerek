@@ -72,7 +72,7 @@ public class AI {
                             System.out.println("Feladtad, vesztettél!");
                             active = false;
                         }
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                         pw.println(word);
                         pw.flush();
                         break;
@@ -93,12 +93,12 @@ public class AI {
                             }
                         }
                         System.out.println(username + ": " + word);
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                         pw.println(word);
                         pw.flush();
                         if(word.equals("exit")){
                             //System.out.println("Feladtad, vesztettél!");
-                            System.exit(0);
+                            active = false;
                         }
                 }
             }
